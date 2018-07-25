@@ -1,0 +1,42 @@
+{
+    "name": "micayael/native-query-from-file-builder-bundle",
+    "description": "Bundle for execute native queries from yaml files",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Juan Ardissone",
+            "email": "micayael@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "symfony/config": "^3.4 || ^4.0 || ^4.1",
+        "symfony/dependency-injection": "^3.4 || ^4.0 || ^4.1",
+        "symfony/yaml": "^3.4 || ^4.0 || ^4.1",
+        "doctrine/orm": "^2.6",
+        "symfony/http-kernel": "^3.4 || ^4.0 || ^4.1",
+        "adbario/php-dot-notation": "^2.0",
+        "symfony/filesystem": "^3.4 || ^4.0 || ^4.1"
+    },
+    "require-dev": {
+        "doctrine/doctrine-bundle": "^1.9",
+        "friendsofphp/php-cs-fixer": "^2.12",
+        "symfony/framework-bundle": "^3.4 || ^4.0 || ^4.1",
+        "symfony/phpunit-bridge": "^3.4 || ^4.0 || ^4.1",
+        "symfony/var-dumper": "^3.4 || ^4.0 || ^4.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Micayael\\NativeQueryFromFileBuilderBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Micayael\\NativeQueryFromFileBuilderBundle\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
