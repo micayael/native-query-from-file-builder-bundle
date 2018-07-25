@@ -3,7 +3,7 @@ NativeQueryFromFileBuilderBundle
 
 [![Build Status](https://api.travis-ci.org/micayael/native-query-from-file-builder-bundle.svg)](https://travis-ci.org/micayael/native-query-from-file-builder-bundle)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/micayael/native-query-from-file-builder-bundle/badges/quality-score.png)](https://scrutinizer-ci.com/g/micayael/native-query-from-file-builder-bundle/)
-[![Packagist](https://img.shields.io/packagist/v/jms/serializer-bundle.svg)](https://packagist.org/packages/jms/serializer-bundle)
+[![Packagist](https://img.shields.io/packagist/v/micayael/native-query-from-file-builder-bundle.svg)](https://packagist.org/packages/micayael/native-query-from-file-builder-bundle)
 
 This bundle let you write your SQL SELECT sentences into yaml files 
 for better organization and then execute them within the application
