@@ -14,7 +14,7 @@
         "symfony/config": "^3.4 || ^4.0",
         "symfony/dependency-injection": "^3.4 || ^4.0",
         "symfony/yaml": "^3.4 || ^4.0",
-        "doctrine/orm": "^2.6",
+        "doctrine/orm": "^2.5 || ^2.6",
         "symfony/http-kernel": "^3.4 || ^4.0",
         "adbario/php-dot-notation": "^2.0",
         "symfony/filesystem": "^3.4 || ^4.0"

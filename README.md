@@ -5,9 +5,9 @@ NativeQueryFromFileBuilderBundle
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/micayael/native-query-from-file-builder-bundle/badges/quality-score.png)](https://scrutinizer-ci.com/g/micayael/native-query-from-file-builder-bundle/)
 [![Packagist](https://img.shields.io/packagist/v/micayael/native-query-from-file-builder-bundle.svg)](https://packagist.org/packages/micayael/native-query-from-file-builder-bundle)
 ![License](https://img.shields.io/packagist/l/micayael/native-query-from-file-builder-bundle.svg)
-
 [![Latest Stable Version](https://poser.pugx.org/micayael/native-query-from-file-builder-bundle/v/stable)](https://packagist.org/packages/micayael/native-query-from-file-builder-bundle)
 [![Total Downloads](https://poser.pugx.org/micayael/native-query-from-file-builder-bundle/downloads)](https://packagist.org/packages/micayael/native-query-from-file-builder-bundle)
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/micayael/native-query-from-file-builder-bundle.svg)](https://packagist.org/packages/micayael/native-query-from-file-builder-bundle)
 
 This bundle let you write your SQL SELECT sentences into yaml files 
 for better organization and then execute them within the application
@@ -67,7 +67,10 @@ class AppKernel extends Kernel
 Configuration
 -------------
 
-The only configuration is the path of the folder that contains the yaml files
+The only required configuration is the path of the folder that contains the yaml files.
+
+Optionally you can choose the format of the files that will contain the queries between
+yaml (default) and yml
 
 ### Applications that use Symfony Flex
 
@@ -76,6 +79,7 @@ Write the folder where you will store your queries in config/native_query_from_f
 ```yaml
 native_query_from_file_builder:
     sql_queries_dir: '%kernel.project_dir%/config/queries'
+    file_extension: yml # optional (default: yaml)
 ```
 
 ### Applications that don't use Symfony Flex
@@ -85,20 +89,12 @@ Write the folder where you will store your queries in app/config/config.yml
 ```yaml
 native_query_from_file_builder:
     sql_queries_dir: '%kernel.root_dir%/config/queries'
+    file_extension: yml # optional (default: yaml)
 ```
 
-Examples
---------
+Full Documentation and examples
+-------------------------------
 
-Write your queries into files stored in your "sql_queries_dir" folder.
-
-- products.yaml
-
-```yaml
-products: |
-    SELECT
-        p.id,
-        p.name,
-        p.price
-    FROM products p
-```
+- [Define your queries](/micayael/native-query-from-file-builder-bundle/blob/master/doc/defining_queries.md)
+- [Use your queries](/micayael/native-query-from-file-builder-bundle/blob/master/doc/using_queries.md)
+- [Extending the bundle](/micayael/native-query-from-file-builder-bundle/blob/master/doc/using_queries.md)

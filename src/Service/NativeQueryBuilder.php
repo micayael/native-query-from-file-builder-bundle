@@ -7,6 +7,7 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Micayael\NativeQueryFromFileBuilderBundle\Helper\NativeQueryBuilderHelper;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class NativeQueryBuilder implements NativeQueryBuilderInterface
 {
@@ -15,13 +16,19 @@ class NativeQueryBuilder implements NativeQueryBuilderInterface
      */
     private $em;
 
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
+
     private $helper;
 
-    public function __construct(EntityManagerInterface $em, string $sqlQueriesDir)
+    public function __construct(EntityManagerInterface $em, ?EventDispatcherInterface $eventDispatcher, array $config)
     {
         $this->em = $em;
+        $this->eventDispatcher = $eventDispatcher;
 
-        $this->helper = new NativeQueryBuilderHelper($sqlQueriesDir);
+        $this->helper = new NativeQueryBuilderHelper($this->eventDispatcher, $config['sql_queries_dir'], $config['file_extension']);
     }
 
     public function findOneFromSqlKey(string $key, array $params = [], ResultSetMappingBuilder $rsm = null)
