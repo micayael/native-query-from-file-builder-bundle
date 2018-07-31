@@ -100,7 +100,7 @@ clients_pagination:
         @{clients_pagination.from}
         @[clients_pagination.params]
         ORDER BY s.date DESC
-    count:
+    count: |
         SELECT count(1)
         @{clients_pagination.from}
         @[clients_pagination.params]
