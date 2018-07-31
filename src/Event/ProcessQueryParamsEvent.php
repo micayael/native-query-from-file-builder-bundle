@@ -32,11 +32,14 @@ class ProcessQueryParamsEvent extends Event
     private $originalFilter;
 
     /**
-     * @var string
+     * @var array
      */
     private $processedParams = [];
 
-    private $processedFilter = '';
+    /**
+     * @var string
+     */
+    private $processedFilter;
 
     public function __construct(string $snippetKey, ?string $filterType = null, string $paramKey, array $originalParams, string $originalFilter)
     {
@@ -65,7 +68,6 @@ class ProcessQueryParamsEvent extends Event
                 $this->replaceParamValue($newValue);
                 break;
             case 'in':
-
                 $newFilter = '';
                 $newParams = [];
 
@@ -201,5 +203,10 @@ class ProcessQueryParamsEvent extends Event
     public function getOriginalParams(): array
     {
         return $this->originalParams;
+    }
+
+    public function getOriginalFilter(): string
+    {
+        return $this->originalFilter;
     }
 }

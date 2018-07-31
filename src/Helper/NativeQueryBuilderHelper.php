@@ -81,7 +81,7 @@ class NativeQueryBuilderHelper
 
         array_push($sqlParts, $sql);
 
-        $sql = $this->resolveOptionalKeys($dot, $sqlParts, $params, $sqlParts);
+        $sql = $this->resolveOptionalKeys($dot, $sqlParts, $params);
 
         // Reemplaza espacios adicionales
         $sql = trim(preg_replace('/\s+/', ' ', $sql));
