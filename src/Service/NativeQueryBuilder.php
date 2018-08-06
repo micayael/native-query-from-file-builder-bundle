@@ -89,4 +89,15 @@ class NativeQueryBuilder implements NativeQueryBuilderInterface
 
         return $ret;
     }
+
+    public function findScalarFromSqlKey(string $key, array $params = [])
+    {
+        $sql = $this->helper->getSqlFromYamlKey($key, $params);
+
+        $ret = $this->em
+            ->getConnection()
+            ->fetchColumn($sql, $params);
+
+        return $ret;
+    }
 }

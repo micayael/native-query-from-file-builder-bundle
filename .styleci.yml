@@ -1,0 +1,6 @@
+preset: symfony
+risky: false
+finder:
+  exclude:
+    - vendor
+  name: "*.php"

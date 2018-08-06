@@ -7,6 +7,7 @@ use Micayael\NativeQueryFromFileBuilderBundle\Exception\NonExistentQueryFileExce
 use Micayael\NativeQueryFromFileBuilderBundle\Exception\NonExistentQueryKeyException;
 use Micayael\NativeQueryFromFileBuilderBundle\Helper\NativeQueryBuilderHelper;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class NativeQueryBuilderHelperTest extends TestCase
 {
@@ -17,12 +18,16 @@ class NativeQueryBuilderHelperTest extends TestCase
 
     protected function setUp()
     {
-        $this->helper = new NativeQueryBuilderHelper(null, __DIR__.'/../queries');
+        $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+
+        $this->helper = new NativeQueryBuilderHelper($eventDispatcher, __DIR__.'/../queries');
     }
 
     public function testNonExistentQueryDirectoryException()
     {
-        $helper = new NativeQueryBuilderHelper(null, __DIR__.'/../non_existent');
+        $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+
+        $helper = new NativeQueryBuilderHelper($eventDispatcher, __DIR__.'/../non_existent');
 
         $params = [];
 

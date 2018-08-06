@@ -3,6 +3,7 @@ NativeQueryFromFileBuilderBundle
 
 [![Build Status](https://api.travis-ci.org/micayael/native-query-from-file-builder-bundle.svg)](https://travis-ci.org/micayael/native-query-from-file-builder-bundle)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/micayael/native-query-from-file-builder-bundle/badges/quality-score.png)](https://scrutinizer-ci.com/g/micayael/native-query-from-file-builder-bundle/)
+[![StyleCI](https://github.styleci.io/repos/142354406/shield?branch=master)](https://github.styleci.io/repos/142354406)
 [![Packagist](https://img.shields.io/packagist/v/micayael/native-query-from-file-builder-bundle.svg)](https://packagist.org/packages/micayael/native-query-from-file-builder-bundle)
 ![License](https://img.shields.io/packagist/l/micayael/native-query-from-file-builder-bundle.svg)
 [![Latest Stable Version](https://poser.pugx.org/micayael/native-query-from-file-builder-bundle/v/stable)](https://packagist.org/packages/micayael/native-query-from-file-builder-bundle)
@@ -95,6 +96,6 @@ native_query_from_file_builder:
 Full Documentation and examples
 -------------------------------
 
-- [Define your queries](/micayael/native-query-from-file-builder-bundle/blob/master/doc/defining_queries.md)
-- [Use your queries](/micayael/native-query-from-file-builder-bundle/blob/master/doc/using_queries.md)
-- [Extending the bundle](/micayael/native-query-from-file-builder-bundle/blob/master/doc/using_queries.md)
+- [Define your queries](doc/defining_queries.md)
+- [Use your queries](doc/using_queries.md)
+- [Extending the bundle](doc/using_queries.md)

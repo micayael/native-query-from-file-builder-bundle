@@ -165,7 +165,7 @@ class NativeQueryBuilderHelper
 
                 $snippets = $dot->get($snippetKey);
 
-                foreach ($snippets as $type => $filter) {
+                foreach ($snippets as $filter) {
                     $filterType = null;
 
                     if (is_array($filter)) {

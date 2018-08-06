@@ -41,7 +41,7 @@ class ProcessQueryParamsEvent extends Event
      */
     private $processedFilter;
 
-    public function __construct(string $snippetKey, ?string $filterType = null, string $paramKey, array $originalParams, string $originalFilter)
+    public function __construct(string $snippetKey, ?string $filterType, string $paramKey, array $originalParams, string $originalFilter)
     {
         $this->snippetKey = $snippetKey;
         $this->filterType = $filterType;
@@ -64,7 +64,7 @@ class ProcessQueryParamsEvent extends Event
                 $this->replaceParamValue($newValue);
                 break;
             case 'numeric_any':
-                $newValue = '{'.implode(', ', array_map('intval', $this->getOriginalParamValue())).'}';
+                $newValue = '{'.implode(', ', array_map('intval', $this->getOriginalParamValue())).'}::integer';
                 $this->replaceParamValue($newValue);
                 break;
             case 'in':
