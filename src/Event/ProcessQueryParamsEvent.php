@@ -58,14 +58,17 @@ class ProcessQueryParamsEvent extends Event
             case 'like':
                 $newValue = '%'.$this->getOriginalParamValue().'%';
                 $this->replaceParamValue($newValue);
+
                 break;
             case 'string_any':
                 $newValue = '{'.implode(', ', array_map('strval', $this->getOriginalParamValue())).'}';
                 $this->replaceParamValue($newValue);
+
                 break;
             case 'numeric_any':
                 $newValue = '{'.implode(', ', array_map('intval', $this->getOriginalParamValue())).'}::integer';
                 $this->replaceParamValue($newValue);
+
                 break;
             case 'in':
                 $newFilter = '';

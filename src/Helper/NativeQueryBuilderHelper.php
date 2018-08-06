@@ -15,6 +15,7 @@ use Symfony\Component\Yaml\Yaml;
 class NativeQueryBuilderHelper
 {
     const REQUIRED_ID_PATTERN = '/@{.+?}/';
+
     const OPTIONAL_ID_PATTERN = "/@\[.+?\]/";
 
     const KEY_PATTERN = '/[a-z0-9._]+/';
