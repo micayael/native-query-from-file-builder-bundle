@@ -19,15 +19,17 @@ class NativeQueryBuilderHelperTest extends TestCase
     protected function setUp()
     {
         $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+        $cache = null;
 
-        $this->helper = new NativeQueryBuilderHelper($eventDispatcher, __DIR__.'/../queries');
+        $this->helper = new NativeQueryBuilderHelper($eventDispatcher, $cache, __DIR__.'/../queries');
     }
 
     public function testNonExistentQueryDirectoryException()
     {
         $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+        $cache = null;
 
-        $helper = new NativeQueryBuilderHelper($eventDispatcher, __DIR__.'/../non_existent');
+        $helper = new NativeQueryBuilderHelper($eventDispatcher, $cache, __DIR__.'/../non_existent');
 
         $params = [];
 

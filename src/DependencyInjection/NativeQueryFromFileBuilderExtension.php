@@ -18,6 +18,6 @@ class NativeQueryFromFileBuilderExtension extends Extension
         $loader->load('services.xml');
 
         $nativeQueryBuilderDefinition = $container->getDefinition('native_query_from_file_builder.services.native_query_builder');
-        $nativeQueryBuilderDefinition->setArgument(2, $config);
+        $nativeQueryBuilderDefinition->setArgument(3, $config);
     }
 }

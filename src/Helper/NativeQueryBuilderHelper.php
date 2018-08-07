@@ -8,6 +8,7 @@ use Micayael\NativeQueryFromFileBuilderBundle\Event\ProcessQueryParamsEvent;
 use Micayael\NativeQueryFromFileBuilderBundle\Exception\NonExistentQueryDirectoryException;
 use Micayael\NativeQueryFromFileBuilderBundle\Exception\NonExistentQueryFileException;
 use Micayael\NativeQueryFromFileBuilderBundle\Exception\NonExistentQueryKeyException;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
@@ -21,17 +22,23 @@ class NativeQueryBuilderHelper
     const KEY_PATTERN = '/[a-z0-9._]+/';
 
     /**
-     * @var EventDispatcherInterface
+     * @var null|EventDispatcherInterface
      */
     private $eventDispatcher;
+
+    /**
+     * @var null|AdapterInterface
+     */
+    private $cache;
 
     private $queryDir;
 
     private $fileExtension;
 
-    public function __construct(?EventDispatcherInterface $eventDispatcher, string $queryDir, string $fileExtension = 'yaml')
+    public function __construct(?EventDispatcherInterface $eventDispatcher, ?AdapterInterface $cache, string $queryDir, string $fileExtension = 'yaml')
     {
         $this->eventDispatcher = $eventDispatcher;
+        $this->cache = $cache;
 
         $this->queryDir = $queryDir;
         $this->fileExtension = $fileExtension;
@@ -56,21 +63,20 @@ class NativeQueryBuilderHelper
         $fileKey = $queryFullKey[0];
         $queryKey = $queryFullKey[1];
 
-        $fileSystem = new Filesystem();
+        if ($this->cache) {
+            $cacheItem = $this->cache->getItem('nqbff_'.$fileKey);
 
-        if (!$fileSystem->exists($this->queryDir)) {
-            throw new NonExistentQueryDirectoryException($this->queryDir);
+            if (!$cacheItem->isHit()) {
+                $dot = $this->getQueryFileContent($fileKey);
+
+                $cacheItem->set($dot);
+                $this->cache->save($cacheItem);
+            }
+
+            $dot = $cacheItem->get();
+        } else {
+            $dot = $this->getQueryFileContent($fileKey);
         }
-
-        $filename = sprintf('%s/%s.%s', $this->queryDir, $fileKey, $this->fileExtension);
-
-        if (!$fileSystem->exists($filename)) {
-            throw new NonExistentQueryFileException($filename);
-        }
-
-        $data = Yaml::parseFile($filename);
-
-        $dot = new Dot($data);
 
         if (!$dot->has($queryKey)) {
             throw new NonExistentQueryKeyException($queryKey);
@@ -88,6 +94,35 @@ class NativeQueryBuilderHelper
         $sql = trim(preg_replace('/\s+/', ' ', $sql));
 
         return $sql;
+    }
+
+    /**
+     * @param string $fileKey
+     *
+     * @return Dot
+     *
+     * @throws NonExistentQueryDirectoryException
+     * @throws NonExistentQueryFileException
+     */
+    private function getQueryFileContent(string $fileKey): Dot
+    {
+        $fileSystem = new Filesystem();
+
+        if (!$fileSystem->exists($this->queryDir)) {
+            throw new NonExistentQueryDirectoryException($this->queryDir);
+        }
+
+        $filename = sprintf('%s/%s.%s', $this->queryDir, $fileKey, $this->fileExtension);
+
+        if (!$fileSystem->exists($filename)) {
+            throw new NonExistentQueryFileException($filename);
+        }
+
+        $data = Yaml::parseFile($filename);
+
+        $dot = new Dot($data);
+
+        return $dot;
     }
 
     /**
