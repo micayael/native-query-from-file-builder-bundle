@@ -228,7 +228,7 @@ class NativeQueryBuilderHelperTest extends TestCase
         $params = [
             'name' => 'Jhon',
             'min_date' => '2018-01-01',
-            'orderby' => 'c.date desc, c.id asc'
+            'orderby' => 'c.date desc, c.id asc',
         ];
 
         $sql = $this->helper->getSqlFromYamlKey('clients:clients_pagination_orderby.count', $params);
@@ -245,7 +245,7 @@ class NativeQueryBuilderHelperTest extends TestCase
         $params = [
             'name' => 'Jhon',
             'min_date' => '2018-01-01',
-            'orderby' => 'c.date desc, c.id asc'
+            'orderby' => 'c.date desc, c.id asc',
         ];
 
         $sql = $this->helper->getSqlFromYamlKey('clients:clients_pagination_orderby.count', $params);

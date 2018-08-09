@@ -40,7 +40,7 @@ class NativeQueryBuilderHelper
         $this->eventDispatcher = $eventDispatcher;
         $this->cache = null;
 
-        if(!$config['debug']){
+        if (!$config['debug']) {
             $this->cache = $cache;
         }
 
@@ -97,7 +97,7 @@ class NativeQueryBuilderHelper
         // Reemplaza espacios adicionales
         $sql = trim(preg_replace('/\s+/', ' ', $sql));
 
-        if(isset($params['orderby'])){
+        if (isset($params['orderby'])) {
             $sql = preg_replace('/:\w+:/', $params['orderby'], $sql);
             $sql = str_replace(':orderby', $params['orderby'], $sql);
         }
