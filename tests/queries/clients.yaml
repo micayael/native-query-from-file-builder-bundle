@@ -110,3 +110,37 @@ clients_pagination:
     params:
         - c.date >= :min_date
         - like: c.firstname like :name
+
+clients_pagination_orderby:
+    base: |
+        SELECT *
+        @{clients_pagination.from}
+        @[clients_pagination.params]
+        ORDER BY :orderby
+    count: |
+        SELECT count(1)
+        @{clients_pagination.from}
+        @[clients_pagination.params]
+    from:
+        FROM clients c
+        JOIN sales s on c.id = s.client_id
+    params:
+        - c.date >= :min_date
+        - like: c.firstname like :name
+
+clients_pagination_custom_orderby:
+    base: |
+        SELECT *
+        @{clients_pagination.from}
+        @[clients_pagination.params]
+        ORDER BY :order:
+    count: |
+        SELECT count(1)
+        @{clients_pagination.from}
+        @[clients_pagination.params]
+    from:
+        FROM clients c
+        JOIN sales s on c.id = s.client_id
+    params:
+        - c.date >= :min_date
+        - like: c.firstname like :name

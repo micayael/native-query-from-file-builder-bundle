@@ -20,16 +20,26 @@ class NativeQueryBuilderHelperTest extends TestCase
     {
         $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
         $cache = null;
+        $config = [
+            'sql_queries_dir' => __DIR__.'/../queries',
+            'file_extension' => 'yaml',
+            'debug' => true,
+        ];
 
-        $this->helper = new NativeQueryBuilderHelper($eventDispatcher, $cache, __DIR__.'/../queries');
+        $this->helper = new NativeQueryBuilderHelper($eventDispatcher, $cache, $config);
     }
 
     public function testNonExistentQueryDirectoryException()
     {
         $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
         $cache = null;
+        $config = [
+            'sql_queries_dir' => __DIR__.'/../non_existent',
+            'file_extension' => 'yaml',
+            'debug' => true,
+        ];
 
-        $helper = new NativeQueryBuilderHelper($eventDispatcher, $cache, __DIR__.'/../non_existent');
+        $helper = new NativeQueryBuilderHelper($eventDispatcher, $cache, $config);
 
         $params = [];
 
@@ -211,5 +221,39 @@ class NativeQueryBuilderHelperTest extends TestCase
         $sql = $this->helper->getSqlFromYamlKey('clients:clients_pagination.base', $params);
 
         $this->assertEquals('SELECT * FROM clients c JOIN sales s on c.id = s.client_id WHERE (c.date >= :min_date) AND (c.firstname like :name) ORDER BY s.date DESC', $sql);
+    }
+
+    public function testSqlWithPaginationOrderBy()
+    {
+        $params = [
+            'name' => 'Jhon',
+            'min_date' => '2018-01-01',
+            'orderby' => 'c.date desc, c.id asc'
+        ];
+
+        $sql = $this->helper->getSqlFromYamlKey('clients:clients_pagination_orderby.count', $params);
+
+        $this->assertEquals('SELECT count(1) FROM clients c JOIN sales s on c.id = s.client_id WHERE (c.date >= :min_date) AND (c.firstname like :name)', $sql);
+
+        $sql = $this->helper->getSqlFromYamlKey('clients:clients_pagination_orderby.base', $params);
+
+        $this->assertEquals('SELECT * FROM clients c JOIN sales s on c.id = s.client_id WHERE (c.date >= :min_date) AND (c.firstname like :name) ORDER BY c.date desc, c.id asc', $sql);
+    }
+
+    public function testSqlWithPaginationCustomOrderBy()
+    {
+        $params = [
+            'name' => 'Jhon',
+            'min_date' => '2018-01-01',
+            'orderby' => 'c.date desc, c.id asc'
+        ];
+
+        $sql = $this->helper->getSqlFromYamlKey('clients:clients_pagination_orderby.count', $params);
+
+        $this->assertEquals('SELECT count(1) FROM clients c JOIN sales s on c.id = s.client_id WHERE (c.date >= :min_date) AND (c.firstname like :name)', $sql);
+
+        $sql = $this->helper->getSqlFromYamlKey('clients:clients_pagination_orderby.base', $params);
+
+        $this->assertEquals('SELECT * FROM clients c JOIN sales s on c.id = s.client_id WHERE (c.date >= :min_date) AND (c.firstname like :name) ORDER BY c.date desc, c.id asc', $sql);
     }
 }

@@ -35,7 +35,7 @@ class NativeQueryBuilder implements NativeQueryBuilderInterface
         $this->eventDispatcher = $eventDispatcher;
         $this->cache = $cache;
 
-        $this->helper = new NativeQueryBuilderHelper($this->eventDispatcher, $this->cache, $config['sql_queries_dir'], $config['file_extension']);
+        $this->helper = new NativeQueryBuilderHelper($this->eventDispatcher, $this->cache, $config);
     }
 
     public function findOneFromSqlKey(string $key, array $params = [], ResultSetMappingBuilder $rsm = null)

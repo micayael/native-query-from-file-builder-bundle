@@ -71,6 +71,7 @@ class NativeQueryFromFileBuilderTestingKernel extends Kernel
 
         $c->loadFromExtension('native_query_from_file_builder', [
             'sql_queries_dir' => 'config/queries',
+            'debug' => true,
         ]);
     }
 

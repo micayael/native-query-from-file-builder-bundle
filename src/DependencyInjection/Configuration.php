@@ -16,6 +16,7 @@ class Configuration implements ConfigurationInterface
             ->children()
 
                 ->scalarNode('sql_queries_dir')->end()
+                ->scalarNode('debug')->end()
                 ->enumNode('file_extension')
                     ->values(['yaml', 'yml'])
                     ->defaultValue('yaml')

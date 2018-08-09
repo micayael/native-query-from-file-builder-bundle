@@ -35,13 +35,17 @@ class NativeQueryBuilderHelper
 
     private $fileExtension;
 
-    public function __construct(?EventDispatcherInterface $eventDispatcher, ?AdapterInterface $cache, string $queryDir, string $fileExtension = 'yaml')
+    public function __construct(?EventDispatcherInterface $eventDispatcher, ?AdapterInterface $cache, array $config)
     {
         $this->eventDispatcher = $eventDispatcher;
-        $this->cache = $cache;
+        $this->cache = null;
 
-        $this->queryDir = $queryDir;
-        $this->fileExtension = $fileExtension;
+        if(!$config['debug']){
+            $this->cache = $cache;
+        }
+
+        $this->queryDir = $config['sql_queries_dir'];
+        $this->fileExtension = $config['file_extension'];
     }
 
     /**
@@ -92,6 +96,11 @@ class NativeQueryBuilderHelper
 
         // Reemplaza espacios adicionales
         $sql = trim(preg_replace('/\s+/', ' ', $sql));
+
+        if(isset($params['orderby'])){
+            $sql = preg_replace('/:\w+:/', $params['orderby'], $sql);
+            $sql = str_replace(':orderby', $params['orderby'], $sql);
+        }
 
         return $sql;
     }
