@@ -128,3 +128,5 @@ follow your own standard
     params:
         - in: firstname IN(:firstnames)
 ```
+
+7. Order by

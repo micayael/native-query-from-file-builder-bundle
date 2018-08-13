@@ -74,8 +74,12 @@ class NativeQueryBuilder implements NativeQueryBuilderInterface
         }
     }
 
-    public function findFromSqlKey(string $key, array $params = [], ResultSetMappingBuilder $rsm = null): array
+    public function findFromSqlKey(string $key, array $params = [], ?string $orderBy, ResultSetMappingBuilder $rsm = null): array
     {
+        if ($orderBy) {
+            $params['orderby'] = $orderBy;
+        }
+
         $sql = $this->helper->getSqlFromYamlKey($key, $params);
 
         if ($rsm) {
