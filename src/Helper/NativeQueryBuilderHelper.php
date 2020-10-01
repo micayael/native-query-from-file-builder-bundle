@@ -22,12 +22,12 @@ class NativeQueryBuilderHelper
     const KEY_PATTERN = '/[a-z0-9._]+/';
 
     /**
-     * @var null|EventDispatcherInterface
+     * @var EventDispatcherInterface|null
      */
     private $eventDispatcher;
 
     /**
-     * @var null|AdapterInterface
+     * @var AdapterInterface|null
      */
     private $cache;
 
@@ -50,11 +50,6 @@ class NativeQueryBuilderHelper
 
     /**
      * Get a SQL query from a query key in a yaml file.
-     *
-     * @param string $queryFullKey
-     * @param array  $params
-     *
-     * @return string
      *
      * @throws NonExistentQueryDirectoryException
      * @throws NonExistentQueryFileException
@@ -106,10 +101,6 @@ class NativeQueryBuilderHelper
     }
 
     /**
-     * @param string $fileKey
-     *
-     * @return Dot
-     *
      * @throws NonExistentQueryDirectoryException
      * @throws NonExistentQueryFileException
      */
@@ -135,9 +126,6 @@ class NativeQueryBuilderHelper
     }
 
     /**
-     * @param Dot    $dot
-     * @param string $sql
-     *
      * @return array An array of query parts depending on required keys @{file:query}
      *
      * @throws NonExistentQueryKeyException
@@ -172,10 +160,6 @@ class NativeQueryBuilderHelper
     }
 
     /**
-     * @param Dot   $dot
-     * @param array $sqlParts
-     * @param array $params
-     *
      * @return string Processed SQL with parameters defined by @[file:query:params]
      *
      * @throws NonExistentQueryKeyException

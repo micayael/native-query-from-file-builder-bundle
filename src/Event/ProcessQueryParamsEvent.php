@@ -117,8 +117,6 @@ class ProcessQueryParamsEvent extends Event
 
     /**
      * Set processed params.
-     *
-     * @param array $params
      */
     public function setProcessedParams(array $params): void
     {
@@ -135,8 +133,6 @@ class ProcessQueryParamsEvent extends Event
 
     /**
      * Replaces the value of the current filter.
-     *
-     * @param string $filter
      */
     public function setProcessedFilter(string $filter): void
     {
@@ -145,8 +141,6 @@ class ProcessQueryParamsEvent extends Event
 
     /**
      * Remove a param for the list of processed params.
-     *
-     * @param array $paramKeys
      */
     public function removeParams(array $paramKeys): void
     {
@@ -168,7 +162,6 @@ class ProcessQueryParamsEvent extends Event
     /**
      * Adds or replaces the value of a para defined by $paramKey.
      *
-     * @param string $paramKey
      * @param $newValue
      */
     public function addOrReplaceParamValue(string $paramKey, $newValue): void

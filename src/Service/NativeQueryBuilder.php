@@ -18,12 +18,12 @@ class NativeQueryBuilder implements NativeQueryBuilderInterface
     private $em;
 
     /**
-     * @var null|EventDispatcherInterface
+     * @var EventDispatcherInterface|null
      */
     private $eventDispatcher;
 
     /**
-     * @var null|AdapterInterface
+     * @var AdapterInterface|null
      */
     private $cache;
 
