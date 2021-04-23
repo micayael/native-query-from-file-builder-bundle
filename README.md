@@ -81,6 +81,7 @@ Write the folder where you will store your queries in config/native_query_from_f
 native_query_from_file_builder:
     sql_queries_dir: '%kernel.project_dir%/config/queries'
     file_extension: yml # optional (default: yaml)
+    debug: false # show more información
 ```
 
 ### Applications that don't use Symfony Flex
@@ -91,6 +92,7 @@ Write the folder where you will store your queries in app/config/config.yml
 native_query_from_file_builder:
     sql_queries_dir: '%kernel.root_dir%/config/queries'
     file_extension: yml # optional (default: yaml)
+    debug: '%env(resolve:APP_ENV)%' # show more información
 ```
 
 Full Documentation and examples
