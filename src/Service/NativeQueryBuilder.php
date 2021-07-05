@@ -38,6 +38,11 @@ class NativeQueryBuilder implements NativeQueryBuilderInterface
         $this->helper = new NativeQueryBuilderHelper($this->eventDispatcher, $this->cache, $config);
     }
 
+    public function changeEntityManager(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     public function findOneFromSqlKey(string $key, array $params = [], ResultSetMappingBuilder $rsm = null)
     {
         try {
