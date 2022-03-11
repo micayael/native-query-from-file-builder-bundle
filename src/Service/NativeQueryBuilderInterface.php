@@ -9,9 +9,9 @@ interface NativeQueryBuilderInterface
 {
     public function changeEntityManager(EntityManagerInterface $em);
 
-    public function findOneFromSqlKey(string $key, array $params = [], ResultSetMappingBuilder $rsm = null);
+    public function findOneFromSqlKey(string $key, array $params = [], string $connectionName = null, ResultSetMappingBuilder $rsm = null): array;
 
-    public function findFromSqlKey(string $key, array $params = [], ?string $orderBy, ResultSetMappingBuilder $rsm = null): array;
+    public function findFromSqlKey(string $key, array $params = [], ?string $orderBy = null, string $connectionName = null, ResultSetMappingBuilder $rsm = null): array;
 
-    public function findScalarFromSqlKey(string $key, array $params = []);
+    public function findScalarFromSqlKey(string $key, array $params = [], string $connectionName = null): mixed;
 }

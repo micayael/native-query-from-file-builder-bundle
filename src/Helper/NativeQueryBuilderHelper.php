@@ -12,6 +12,7 @@ use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class NativeQueryBuilderHelper
 {
@@ -35,17 +36,17 @@ class NativeQueryBuilderHelper
 
     private $fileExtension;
 
-    public function __construct(?EventDispatcherInterface $eventDispatcher, ?AdapterInterface $cache, array $config)
+    public function __construct(?EventDispatcherInterface $eventDispatcher, ?AdapterInterface $cache, array $bundleConfig)
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->cache = null;
 
-        if (!$config['debug']) {
+        if ($bundleConfig['cache_sql']) {
             $this->cache = $cache;
         }
 
-        $this->queryDir = $config['sql_queries_dir'];
-        $this->fileExtension = $config['file_extension'];
+        $this->queryDir = $bundleConfig['sql_queries_dir'];
+        $this->fileExtension = $bundleConfig['file_extension'];
     }
 
     /**
@@ -63,16 +64,9 @@ class NativeQueryBuilderHelper
         $queryKey = $queryFullKey[1];
 
         if ($this->cache) {
-            $cacheItem = $this->cache->getItem('nqbff_'.$fileKey);
-
-            if (!$cacheItem->isHit()) {
-                $dot = $this->getQueryFileContent($fileKey);
-
-                $cacheItem->set($dot);
-                $this->cache->save($cacheItem);
-            }
-
-            $dot = $cacheItem->get();
+            $dot = $this->cache->get('nqbff_'.$fileKey, function(ItemInterface $item) use ($fileKey){
+                return $this->getQueryFileContent($fileKey);
+            });
         } else {
             $dot = $this->getQueryFileContent($fileKey);
         }

@@ -20,8 +20,15 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
 
-                ->scalarNode('sql_queries_dir')->end()
-                ->scalarNode('debug')->end()
+                ->scalarNode('sql_queries_dir')
+                    ->defaultValue('%kernel.project_dir%/config/app/queries')
+                ->end()
+                ->scalarNode('default_connection')
+                    ->defaultValue('default')
+                ->end()
+                ->booleanNode('cache_sql')
+                    ->defaultTrue()
+                ->end()
                 ->enumNode('file_extension')
                     ->values(['yaml', 'yml'])
                     ->defaultValue('yaml')

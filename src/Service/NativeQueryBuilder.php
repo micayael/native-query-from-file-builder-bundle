@@ -2,10 +2,12 @@
 
 namespace Micayael\NativeQueryFromFileBuilderBundle\Service;
 
+use Doctrine\DBAL\Result;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 use Micayael\NativeQueryFromFileBuilderBundle\Helper\NativeQueryBuilderHelper;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -16,6 +18,11 @@ class NativeQueryBuilder implements NativeQueryBuilderInterface
      * @var EntityManagerInterface
      */
     private $em;
+
+    /**
+     * @var ManagerRegistry
+     */
+    private $doctrine;
 
     /**
      * @var EventDispatcherInterface|null
@@ -29,13 +36,17 @@ class NativeQueryBuilder implements NativeQueryBuilderInterface
 
     private $helper;
 
-    public function __construct(EntityManagerInterface $em, ?EventDispatcherInterface $eventDispatcher, ?AdapterInterface $cache, array $config)
+    private $bundleConfig;
+
+    public function __construct(EntityManagerInterface $em, ManagerRegistry $doctrine, ?EventDispatcherInterface $eventDispatcher, ?AdapterInterface $cache, array $bundleConfig)
     {
         $this->em = $em;
+        $this->doctrine = $doctrine;
         $this->eventDispatcher = $eventDispatcher;
         $this->cache = $cache;
+        $this->bundleConfig = $bundleConfig;
 
-        $this->helper = new NativeQueryBuilderHelper($this->eventDispatcher, $this->cache, $config);
+        $this->helper = new NativeQueryBuilderHelper($this->eventDispatcher, $this->cache, $bundleConfig);
     }
 
     public function changeEntityManager(EntityManagerInterface $em)
@@ -43,43 +54,7 @@ class NativeQueryBuilder implements NativeQueryBuilderInterface
         $this->em = $em;
     }
 
-    public function findOneFromSqlKey(string $key, array $params = [], ResultSetMappingBuilder $rsm = null)
-    {
-        try {
-            $sql = $this->helper->getSqlFromYamlKey($key, $params);
-
-            $ret = [];
-
-            if ($rsm) {
-                $nativeQuery = $this->em
-                    ->createNativeQuery($sql, $rsm);
-
-                foreach ($params as $key => $value) {
-                    $nativeQuery->setParameter($key, $value);
-                }
-
-                $ret[] = $nativeQuery->getSingleResult();
-            } else {
-                $ret = $this->em
-                    ->getConnection()
-                    ->fetchAll($sql, $params);
-            }
-
-            if (empty($ret)) {
-                return null;
-            }
-
-            if (count($ret) > 1) {
-                throw new NonUniqueResultException(sprintf('Se han encontrado %d filas', count($ret)));
-            }
-
-            return $ret[0];
-        } catch (NoResultException $e) {
-            return null;
-        }
-    }
-
-    public function findFromSqlKey(string $key, array $params = [], ?string $orderBy, ResultSetMappingBuilder $rsm = null): array
+    public function findFromSqlKey(string $key, array $params = [], ?string $orderBy = null, string $connectionName = null, ResultSetMappingBuilder $rsm = null): array
     {
         if ($orderBy) {
             $params['orderby'] = $orderBy;
@@ -98,21 +73,68 @@ class NativeQueryBuilder implements NativeQueryBuilderInterface
 
             $ret = $nativeQuery->getResult();
         } else {
-            $ret = $this->em
-                ->getConnection()
-                ->fetchAll($sql, $params);
+            $result = $this->getResultFromConnection($connectionName, $sql, $params);
+
+            $ret = $result->fetchAllAssociative();
         }
 
         return $ret;
     }
 
-    public function findScalarFromSqlKey(string $key, array $params = [])
+    public function findOneFromSqlKey(string $key, array $params = [], string $connectionName = null, ResultSetMappingBuilder $rsm = null): array
+    {
+        try {
+            $sql = $this->helper->getSqlFromYamlKey($key, $params);
+
+            $ret = [];
+
+            if ($rsm) {
+                $nativeQuery = $this->em
+                    ->createNativeQuery($sql, $rsm);
+
+                foreach ($params as $key => $value) {
+                    $nativeQuery->setParameter($key, $value);
+                }
+
+                $ret[] = $nativeQuery->getSingleResult();
+            } else {
+                $result = $this->getResultFromConnection($connectionName, $sql, $params);
+
+                $ret = $result->fetchAssociative();
+            }
+
+            if (empty($ret)) {
+                return [];
+            }
+
+            return $ret;
+        } catch (NoResultException $e) {
+            return [];
+        }
+    }
+
+    public function findScalarFromSqlKey(string $key, array $params = [], string $connectionName = null): mixed
     {
         $sql = $this->helper->getSqlFromYamlKey($key, $params);
 
-        $ret = $this->em
-            ->getConnection()
-            ->fetchColumn($sql, $params);
+        $result = $this->getResultFromConnection($connectionName, $sql, $params);
+
+        $ret = $result->fetchOne();
+
+        return $ret;
+    }
+
+    private function getResultFromConnection(?string $connectionName, string $sql, array $params = []): Result
+    {
+        $conn = $this->doctrine->getConnection($connectionName ?: $this->bundleConfig['default_connection']);
+
+        $stmt = $conn->prepare($sql);
+
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value);
+        }
+
+        $ret = $stmt->executeQuery();
 
         return $ret;
     }

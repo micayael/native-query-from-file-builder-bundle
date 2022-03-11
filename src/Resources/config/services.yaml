@@ -1,0 +1,9 @@
+services:
+
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    bind:
+      array $bundleConfig: '%micayael_native_query_from_file_bundle_config%'
+
+  Micayael\NativeQueryFromFileBuilderBundle\Service\NativeQueryBuilder: ~

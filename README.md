@@ -20,8 +20,16 @@ Installation
 
 Open a command console, enter your project directory and execute:
 
+* Symfony <5.4
+
 ```console
 $ composer require micayael/native-query-from-file-builder-bundle
+```
+
+* Symfony >=5.4
+
+```console
+$ composer require micayael/native-query-from-file-builder-bundle:~2.0
 ```
 
 ### Applications that don't use Symfony Flex
@@ -31,8 +39,16 @@ $ composer require micayael/native-query-from-file-builder-bundle
 Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
+* Symfony <5.4
+
 ```console
 $ composer require micayael/native-query-from-file-builder-bundle
+```
+
+* Symfony >=5.4
+
+```console
+$ composer require micayael/native-query-from-file-builder-bundle:~2.0
 ```
 
 This command requires you to have Composer installed globally, as explained
@@ -68,32 +84,33 @@ class AppKernel extends Kernel
 Configuration
 -------------
 
-The only required configuration is the path of the folder that contains the yaml files.
-
-Optionally you can choose the format of the files that will contain the queries between
-yaml (default) and yml
-
 ### Applications that use Symfony Flex
-
-Write the folder where you will store your queries in config/native_query_from_file_builder.yaml
 
 ```yaml
 native_query_from_file_builder:
-    sql_queries_dir: '%kernel.project_dir%/config/queries'
-    file_extension: yml # optional (default: yaml)
-    debug: false # show more información
+    sql_queries_dir: '%kernel.project_dir%/config/app/queries' # optional (default: '%kernel.project_dir%/config/app/queries')
+    default_connection: default # see your doctrine.yaml to select the connection you want to use by default - optional default: 'default')
+    file_extension: yml # yaml file extension - optional (default: yaml)
+    cache_sql: true # caches sql statements to avoid processing yaml files in each request. Recommended for production - optional (default: true)
+```
+
+* Symfony 5.4
+
+It is possible to define different configurations for different environments by replicating the file inside the folder corresponding to the environment or with a syntax like the following:
+
+```yaml
+native_query_from_file_builder:
+  default_connection: secondary_connection
+  cache_sql: true
+
+when@dev:
+  native_query_from_file_builder:
+    cache_sql: false
 ```
 
 ### Applications that don't use Symfony Flex
 
-Write the folder where you will store your queries in app/config/config.yml
-
-```yaml
-native_query_from_file_builder:
-    sql_queries_dir: '%kernel.root_dir%/config/queries'
-    file_extension: yml # optional (default: yaml)
-    debug: '%env(resolve:APP_ENV)%' # show more información
-```
+Add your configuration in app/config/config.yml
 
 Full Documentation and examples
 -------------------------------
