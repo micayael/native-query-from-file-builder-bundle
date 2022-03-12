@@ -31,4 +31,6 @@ jobs:
         uses: ramsey/composer-install@v1
 
       - name: Run test suite on PHP ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
-        run: SYMFONY_DEPRECATIONS_HELPER=disabled ./vendor/bin/phpunit
+        env:
+          SYMFONY_DEPRECATIONS_HELPER: disabled
+        run: ./vendor/bin/phpunit
