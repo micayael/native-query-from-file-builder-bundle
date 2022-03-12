@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         operating-system: [ ubuntu-latest, windows-latest ]
-        php: [ '7.3' ]
+        php: [ '7.2' ]
         symfony: [ '5.4.*' ]
 
     steps:
