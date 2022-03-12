@@ -2,10 +2,12 @@
 
 namespace Micayael\NativeQueryFromFileBuilderBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class ProcessQueryParamsEvent extends Event
 {
+    public const NAME = 'native_query_from_file_builder.events.process_query_params';
+
     /**
      * @var string
      */

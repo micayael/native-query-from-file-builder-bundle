@@ -4,12 +4,11 @@ namespace Micayael\NativeQueryFromFileBuilderBundle\Service;
 
 use Doctrine\DBAL\Result;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Micayael\NativeQueryFromFileBuilderBundle\Helper\NativeQueryBuilderHelper;
-use Symfony\Component\Cache\Adapter\AdapterInterface;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class NativeQueryBuilder implements NativeQueryBuilderInterface
@@ -30,7 +29,7 @@ class NativeQueryBuilder implements NativeQueryBuilderInterface
     private $eventDispatcher;
 
     /**
-     * @var AdapterInterface|null
+     * @var CacheItemPoolInterface|null
      */
     private $cache;
 
@@ -38,7 +37,7 @@ class NativeQueryBuilder implements NativeQueryBuilderInterface
 
     private $bundleConfig;
 
-    public function __construct(EntityManagerInterface $em, ManagerRegistry $doctrine, ?EventDispatcherInterface $eventDispatcher, ?AdapterInterface $cache, array $bundleConfig)
+    public function __construct(EntityManagerInterface $em, ManagerRegistry $doctrine, ?EventDispatcherInterface $eventDispatcher, ?CacheItemPoolInterface $cache, array $bundleConfig)
     {
         $this->em = $em;
         $this->doctrine = $doctrine;

@@ -16,14 +16,14 @@ class NativeQueryBuilderHelperTest extends TestCase
      */
     private $helper;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
         $cache = null;
         $config = [
             'sql_queries_dir' => __DIR__.'/../queries',
             'file_extension' => 'yaml',
-            'debug' => true,
+            'cache_sql' => false,
         ];
 
         $this->helper = new NativeQueryBuilderHelper($eventDispatcher, $cache, $config);
@@ -34,9 +34,9 @@ class NativeQueryBuilderHelperTest extends TestCase
         $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
         $cache = null;
         $config = [
-            'sql_queries_dir' => __DIR__.'/../non_existent',
+            'sql_queries_dir' => __DIR__.'/../non_existente',
             'file_extension' => 'yaml',
-            'debug' => true,
+            'cache_sql' => false,
         ];
 
         $helper = new NativeQueryBuilderHelper($eventDispatcher, $cache, $config);
@@ -44,7 +44,7 @@ class NativeQueryBuilderHelperTest extends TestCase
         $params = [];
 
         $this->expectException(NonExistentQueryDirectoryException::class);
-        $this->expectExceptionMessageRegExp('/El directorio configurado ".+" no existe. Favor verifique la configuración del bundle "native_query_from_file_builder.sql_queries_dir"/');
+        $this->expectExceptionMessageMatches('/El directorio configurado ".+" no existe. Favor verifique la configuración del bundle "native_query_from_file_builder.sql_queries_dir"/');
 
         $helper->getSqlFromYamlKey('clients:product', $params);
     }
@@ -54,7 +54,7 @@ class NativeQueryBuilderHelperTest extends TestCase
         $params = [];
 
         $this->expectException(NonExistentQueryFileException::class);
-        $this->expectExceptionMessageRegExp('/El archivo de queries solicitado ".+" no existe/');
+        $this->expectExceptionMessageMatches('/El archivo de queries solicitado ".+" no existe/');
 
         $this->helper->getSqlFromYamlKey('non_existent:client', $params);
     }
@@ -64,7 +64,7 @@ class NativeQueryBuilderHelperTest extends TestCase
         $params = [];
 
         $this->expectException(NonExistentQueryKeyException::class);
-        $this->expectExceptionMessageRegExp('/El queries solicitado ".+" no existe/');
+        $this->expectExceptionMessageMatches('/El queries solicitado ".+" no existe/');
 
         $this->helper->getSqlFromYamlKey('clients:non_existent', $params);
     }
@@ -78,9 +78,9 @@ class NativeQueryBuilderHelperTest extends TestCase
         $this->assertEquals('SELECT * FROM clients', $sql);
     }
 
-    //----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------
     // Required Params
-    //----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------
 
     public function testSqlWithRequiredParams()
     {
@@ -93,9 +93,9 @@ class NativeQueryBuilderHelperTest extends TestCase
         $this->assertEquals('SELECT * FROM clients WHERE slug = :slug', $sql);
     }
 
-    //----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------
     // Snippets (optionals & required)
-    //----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------
 
     public function testSqlWithOptionalFiltersNotUsingFilters()
     {
@@ -172,9 +172,9 @@ class NativeQueryBuilderHelperTest extends TestCase
         $this->assertEquals('SELECT c.id, c.firstname as name, c.lastname, YEAR(c.birthday) as year FROM clients c WHERE (c.firstname = :firstname) AND (c.lastname = :lastname)', $sql);
     }
 
-    //----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------
     // Special filters
-    //----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------
 
     public function testSqlWithWhereIn()
     {
@@ -187,9 +187,9 @@ class NativeQueryBuilderHelperTest extends TestCase
         $this->assertEquals('SELECT * FROM clients c WHERE (firstname IN(:firstnames_0,:firstnames_1,:firstnames_2))', $sql);
     }
 
-    //----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------
     // Subqueries - Multipart Query
-    //----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------
 
     public function testSqlWithAnySubquery()
     {
@@ -203,9 +203,9 @@ class NativeQueryBuilderHelperTest extends TestCase
         $this->assertEquals('SELECT c.firstname, c.lastname FROM clients c WHERE c.sold > ANY(SELECT s.amount FROM sale s WHERE (s.date > :date) ORDER BY s.amount DESC LIMIT 10) AND (c.firstname = :firstname)', $sql);
     }
 
-    //----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------
     // Pagination
-    //----------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------
 
     public function testSqlWithPagination()
     {

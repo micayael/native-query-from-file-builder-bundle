@@ -3,11 +3,11 @@
 namespace Micayael\NativeQueryFromFileBuilderBundle\Helper;
 
 use Adbar\Dot;
-use Micayael\NativeQueryFromFileBuilderBundle\Event\NativeQueryFromFileBuilderEvents;
 use Micayael\NativeQueryFromFileBuilderBundle\Event\ProcessQueryParamsEvent;
 use Micayael\NativeQueryFromFileBuilderBundle\Exception\NonExistentQueryDirectoryException;
 use Micayael\NativeQueryFromFileBuilderBundle\Exception\NonExistentQueryFileException;
 use Micayael\NativeQueryFromFileBuilderBundle\Exception\NonExistentQueryKeyException;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -16,11 +16,11 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 class NativeQueryBuilderHelper
 {
-    const REQUIRED_ID_PATTERN = '/@{.+?}/';
+    public const REQUIRED_ID_PATTERN = '/@{.+?}/';
 
-    const OPTIONAL_ID_PATTERN = "/@\[.+?\]/";
+    public const OPTIONAL_ID_PATTERN = "/@\[.+?\]/";
 
-    const KEY_PATTERN = '/[a-z0-9._]+/';
+    public const KEY_PATTERN = '/[a-z0-9._]+/';
 
     /**
      * @var EventDispatcherInterface|null
@@ -36,7 +36,7 @@ class NativeQueryBuilderHelper
 
     private $fileExtension;
 
-    public function __construct(?EventDispatcherInterface $eventDispatcher, ?AdapterInterface $cache, array $bundleConfig)
+    public function __construct(?EventDispatcherInterface $eventDispatcher, ?CacheItemPoolInterface $cache, array $bundleConfig)
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->cache = null;
@@ -64,7 +64,7 @@ class NativeQueryBuilderHelper
         $queryKey = $queryFullKey[1];
 
         if ($this->cache) {
-            $dot = $this->cache->get('nqbff_'.$fileKey, function(ItemInterface $item) use ($fileKey){
+            $dot = $this->cache->get('nqbff_'.$fileKey, function (ItemInterface $item) use ($fileKey) {
                 return $this->getQueryFileContent($fileKey);
             });
         } else {
@@ -201,7 +201,7 @@ class NativeQueryBuilderHelper
                             $event = new ProcessQueryParamsEvent($snippetKey, $filterType, $paramKey, $params, $filter);
 
                             if ($this->eventDispatcher) {
-                                $this->eventDispatcher->dispatch(NativeQueryFromFileBuilderEvents::PROCESS_QUERY_PARAMS, $event);
+                                $this->eventDispatcher->dispatch($event);
                             }
 
                             $params = $event->getProcessedParams();

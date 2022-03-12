@@ -6,4 +6,5 @@ services:
     bind:
       array $bundleConfig: '%micayael_native_query_from_file_bundle_config%'
 
-  Micayael\NativeQueryFromFileBuilderBundle\Service\NativeQueryBuilder: ~
+  Micayael\NativeQueryFromFileBuilderBundle\Service\NativeQueryBuilder:
+    public: true
