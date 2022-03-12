@@ -9,11 +9,11 @@ on:
 jobs:
   symfony-tests:
     runs-on: ${{ matrix.operating-system }}
-    name: PHP ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
+    name: PHP ${{ matrix.php }} and Symfony ${{ matrix.symfony }} on ${{ matrix.operating-system }}
     strategy:
       matrix:
         operating-system: [ ubuntu-latest, windows-latest ]
-        php: [ '7.4', '8.0', '8.1' ]
+        php: [ '7.3' ]
         symfony: [ '5.4.*' ]
 
     steps:
