@@ -21,7 +21,7 @@
         "symfony/yaml": "5.4.*|6.0.*"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.4|^3.6",
+        "friendsofphp/php-cs-fixer": "^3.3",
         "sensiolabs/security-checker": "^6.0",
         "symfony/framework-bundle": "5.4.*|6.0.*",
         "symfony/test-pack": "^1.0",
