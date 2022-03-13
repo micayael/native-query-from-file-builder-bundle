@@ -3,13 +3,13 @@ NativeQueryFromFileBuilderBundle
 
 ![symfony54](https://github.com/micayael/native-query-from-file-builder-bundle/actions/workflows/symfony54.yml/badge.svg)
 ![symfony60](https://github.com/micayael/native-query-from-file-builder-bundle/actions/workflows/symfony6.yml/badge.svg)
-[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/micayael/native-query-from-file-builder-bundle/badges/quality-score.png)](https://scrutinizer-ci.com/g/micayael/native-query-from-file-builder-bundle/)
-[![StyleCI](https://github.styleci.io/repos/142354406/shield?branch=master)](https://github.styleci.io/repos/142354406)
-[![Packagist](https://img.shields.io/packagist/v/micayael/native-query-from-file-builder-bundle.svg)](https://packagist.org/packages/micayael/native-query-from-file-builder-bundle)
+![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/micayael/native-query-from-file-builder-bundle/badges/quality-score.png)](https://scrutinizer-ci.com/g/micayael/native-query-from-file-builder-bundle/)
+![StyleCI](https://github.styleci.io/repos/142354406/shield?style=flat)](https://github.styleci.io/repos/142354406/shield?style=flat)
+![Packagist](https://img.shields.io/packagist/v/micayael/native-query-from-file-builder-bundle.svg)](https://packagist.org/packages/micayael/native-query-from-file-builder-bundle)
+![Latest Stable Version](https://poser.pugx.org/micayael/native-query-from-file-builder-bundle/v/stable)](https://packagist.org/packages/micayael/native-query-from-file-builder-bundle)
+![PHP from Packagist](https://img.shields.io/packagist/php-v/micayael/native-query-from-file-builder-bundle.svg)](https://packagist.org/packages/micayael/native-query-from-file-builder-bundle)
 ![License](https://img.shields.io/packagist/l/micayael/native-query-from-file-builder-bundle.svg)
-[![Latest Stable Version](https://poser.pugx.org/micayael/native-query-from-file-builder-bundle/v/stable)](https://packagist.org/packages/micayael/native-query-from-file-builder-bundle)
-[![Total Downloads](https://poser.pugx.org/micayael/native-query-from-file-builder-bundle/downloads)](https://packagist.org/packages/micayael/native-query-from-file-builder-bundle)
-[![PHP from Packagist](https://img.shields.io/packagist/php-v/micayael/native-query-from-file-builder-bundle.svg)](https://packagist.org/packages/micayael/native-query-from-file-builder-bundle)
+![Total Downloads](https://poser.pugx.org/micayael/native-query-from-file-builder-bundle/downloads)](https://packagist.org/packages/micayael/native-query-from-file-builder-bundle)
 
 This bundle let you write your SQL SELECT sentences into yaml files 
 for better organization and then execute them within the application
