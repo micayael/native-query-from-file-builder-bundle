@@ -3,12 +3,8 @@ name: Symfony 6
 on:
   push:
     branches: [ master ]
-    tags-ignore:
-      - 1.*
   pull_request:
     branches: [ master ]
-    tags-ignore:
-      - 1.*
 
 jobs:
   symfony-tests:
