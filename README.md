@@ -1,8 +1,8 @@
 NativeQueryFromFileBuilderBundle
 ================================
 
-![symfony54](https://github.com/micayael/native-query-from-file-builder-bundle/actions/workflows/symfony54.yml/badge.svg)
-![symfony60](https://github.com/micayael/native-query-from-file-builder-bundle/actions/workflows/symfony6.yml/badge.svg)
+![github action sf54](https://github.com/micayael/native-query-from-file-builder-bundle/actions/workflows/symfony54.yml/badge.svg)
+![github action sf6](https://github.com/micayael/native-query-from-file-builder-bundle/actions/workflows/symfony6.yml/badge.svg)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/micayael/native-query-from-file-builder-bundle/badges/quality-score.png)](https://scrutinizer-ci.com/g/micayael/native-query-from-file-builder-bundle/)
 [![StyleCI](https://github.styleci.io/repos/142354406/shield?style=flat)](https://github.styleci.io/repos/142354406)
 [![Packagist](https://img.shields.io/packagist/v/micayael/native-query-from-file-builder-bundle.svg)](https://packagist.org/packages/micayael/native-query-from-file-builder-bundle)
