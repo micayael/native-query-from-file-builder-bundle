@@ -33,10 +33,10 @@ jobs:
         with:
           composer-options: "--no-progress --prefer-dist --optimize-autoloader"
 
-      - name: Security check installed dependencies
-        uses: symfonycorp/security-checker-action@v2
+#      - name: Security check installed dependencies
+#        uses: symfonycorp/security-checker-action@v2
 
-      - name: Run test suite on PHP ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
+      - name: Run test suite
         env:
           SYMFONY_DEPRECATIONS_HELPER: disabled
         run: ./vendor/bin/phpunit
