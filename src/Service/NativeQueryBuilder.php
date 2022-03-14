@@ -16,7 +16,7 @@ class NativeQueryBuilder implements NativeQueryBuilderInterface
     /**
      * @var EntityManagerInterface
      */
-    private $em;
+    private $entityManager;
 
     /**
      * @var ManagerRegistry
@@ -37,9 +37,9 @@ class NativeQueryBuilder implements NativeQueryBuilderInterface
 
     private $bundleConfig;
 
-    public function __construct(EntityManagerInterface $em, ManagerRegistry $doctrine, ?EventDispatcherInterface $eventDispatcher, ?CacheItemPoolInterface $cache, array $bundleConfig)
+    public function __construct(EntityManagerInterface $entityManager, ManagerRegistry $doctrine, ?EventDispatcherInterface $eventDispatcher, ?CacheItemPoolInterface $cache, array $bundleConfig)
     {
-        $this->em = $em;
+        $this->entityManager = $entityManager;
         $this->doctrine = $doctrine;
         $this->eventDispatcher = $eventDispatcher;
         $this->cache = $cache;
@@ -48,9 +48,9 @@ class NativeQueryBuilder implements NativeQueryBuilderInterface
         $this->helper = new NativeQueryBuilderHelper($this->eventDispatcher, $this->cache, $bundleConfig);
     }
 
-    public function changeEntityManager(EntityManagerInterface $em)
+    public function changeEntityManager(EntityManagerInterface $entityManager)
     {
-        $this->em = $em;
+        $this->entityManager = $entityManager;
     }
 
     public function findFromSqlKey(string $key, array $params = [], ?string $orderBy = null, string $connectionName = null, ResultSetMappingBuilder $rsm = null): array
@@ -62,7 +62,7 @@ class NativeQueryBuilder implements NativeQueryBuilderInterface
         $sql = $this->helper->getSqlFromYamlKey($key, $params);
 
         if ($rsm) {
-            $nativeQuery = $this->em
+            $nativeQuery = $this->entityManager
                 ->createNativeQuery($sql, $rsm)
             ;
 
@@ -80,7 +80,7 @@ class NativeQueryBuilder implements NativeQueryBuilderInterface
         return $ret;
     }
 
-    public function findOneFromSqlKey(string $key, array $params = [], string $connectionName = null, ResultSetMappingBuilder $rsm = null): array
+    public function findOneFromSqlKey(string $key, array $params = [], string $connectionName = null, ResultSetMappingBuilder $rsm = null)
     {
         try {
             $sql = $this->helper->getSqlFromYamlKey($key, $params);
@@ -88,7 +88,7 @@ class NativeQueryBuilder implements NativeQueryBuilderInterface
             $ret = [];
 
             if ($rsm) {
-                $nativeQuery = $this->em
+                $nativeQuery = $this->entityManager
                     ->createNativeQuery($sql, $rsm);
 
                 foreach ($params as $key => $value) {
@@ -103,16 +103,16 @@ class NativeQueryBuilder implements NativeQueryBuilderInterface
             }
 
             if (empty($ret)) {
-                return [];
+                return null;
             }
 
             return $ret;
         } catch (NoResultException $e) {
-            return [];
+            return null;
         }
     }
 
-    public function findScalarFromSqlKey(string $key, array $params = [], string $connectionName = null): mixed
+    public function findScalarFromSqlKey(string $key, array $params = [], string $connectionName = null)
     {
         $sql = $this->helper->getSqlFromYamlKey($key, $params);
 

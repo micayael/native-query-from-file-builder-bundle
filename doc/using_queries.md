@@ -7,19 +7,49 @@ Use your queries
 You can use an special service injecting **NativeQueryBuilderInterface $nativeQueryBuilder** 
 on your constructor repository or on your action controller declaration.
 
-This service has two method you can use:
+This service has three methods you can use:
 
-- `$nativeQueryBuilder->findOneFromSqlKey(string $key, array $params = [], ResultSetMappingBuilder $rsm = null)`
+1. `public function findFromSqlKey(string $key, array $params = [], ?string $orderBy = null, string $connectionName = null, ResultSetMappingBuilder $rsm = null): array;`
 
-    - **$key:** the query key you want to use, for example *products:product_by_slug*
-    - **$params:** an array of params to set it on the query
-    - **$rsm:** a ResultSetMappingBuilder object to hidrate you ResultSet into an Entity. https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/native-sql.html#the-resultsetmapping
+  - **$key:** the query key you want to use, for example *products:product_by_slug*
+  - **$params:** an array of params to set it on the query
+  - **$orderBy:** a string that represents your orderby clause, for example *c.date desc, c.id asc*
+  - **$connectionName:** a string with the name of your connection database name. see your doctrine.yaml config file and the *native_query_from_file_builder.default_connection* bundle config 
+  - **$rsm:** a ResultSetMappingBuilder object to hidrate your ResultSet into an Entity or DTO. https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/native-sql.html#the-resultsetmapping
 
-    This could return:
+  This could return:
 
-    1. An associative array 
-    2. An entity object if you pass a $rsm object
-    3. null when no results
+  - An associative array
+  - An array of entity objects if you pass a $rsm object
+  - [] when no results
+
+---
+
+2. `public function findOneFromSqlKey(string $key, array $params = [], string $connectionName = null, ResultSetMappingBuilder $rsm = null);`
+
+      - **$key:** the query key you want to use, for example *products:product_by_slug*
+      - **$params:** an array of params to set it on the query
+      - **$connectionName:** a string with the name of your connection database name. see your doctrine.yaml config file and the *native_query_from_file_builder.default_connection* bundle config
+      - **$rsm:** a ResultSetMappingBuilder object to hidrate you ResultSet into an Entity. https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/native-sql.html#the-resultsetmapping
+
+      This could return:
+
+      1. An associative array 
+      2. An entity object if you pass a $rsm object
+      3. null when no results
+
+---
+
+3. `public function findScalarFromSqlKey(string $key, array $params = [], string $connectionName = null);`
+
+   - **$key:** the query key you want to use, for example *products:product_by_slug*
+   - **$params:** an array of params to set it on the query
+   - **$connectionName:** a string with the name of your connection database name. see your doctrine.yaml config file and the *native_query_from_file_builder.default_connection* bundle config
+
+   This could return:
+
+   1. A scalar single data as string, integer, etc
+   2. null when no results
 
 ## Example
 

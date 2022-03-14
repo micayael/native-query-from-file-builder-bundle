@@ -116,6 +116,9 @@ Add your configuration in app/config/config.yml
 Full Documentation and examples
 -------------------------------
 
+- [Introduction](README.md)
 - [Define your queries](doc/defining_queries.md)
 - [Use your queries](doc/using_queries.md)
-- [Extending the bundle](doc/using_queries.md)
+- [Examples](doc/examples.md)
+- [Extending the bundle](doc/using_queries.md) - pending
+- [Development](doc/development.md)

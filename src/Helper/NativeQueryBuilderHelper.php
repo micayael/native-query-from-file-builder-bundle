@@ -8,7 +8,6 @@ use Micayael\NativeQueryFromFileBuilderBundle\Exception\NonExistentQueryDirector
 use Micayael\NativeQueryFromFileBuilderBundle\Exception\NonExistentQueryFileException;
 use Micayael\NativeQueryFromFileBuilderBundle\Exception\NonExistentQueryKeyException;
 use Psr\Cache\CacheItemPoolInterface;
-use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
@@ -28,7 +27,7 @@ class NativeQueryBuilderHelper
     private $eventDispatcher;
 
     /**
-     * @var AdapterInterface|null
+     * @var CacheItemPoolInterface|null
      */
     private $cache;
 

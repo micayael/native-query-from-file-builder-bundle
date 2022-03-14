@@ -122,11 +122,24 @@ like **clients:clients_optional_filters.base** SQL example
 5. The name of the key to point a query or sub keys like *base* or *filters* are completely irrelevant. Just 
 follow your own standard
 
-6. Special filters like in(:array) should be specified like this:
+6. Special filters as in(:array) or like should be specified like this:
 
 ```yaml
     params:
         - in: firstname IN(:firstnames)
+        - like: c.firstname like :name 
 ```
 
+See the examples documentation: [Examples](doc/examples.md)
+
 7. Order by
+
+Full Documentation and examples
+-------------------------------
+
+- [Introduction](README.md)
+- [Define your queries](doc/defining_queries.md)
+- [Use your queries](doc/using_queries.md)
+- [Examples](doc/examples.md)
+- [Extending the bundle](doc/using_queries.md) - pending
+- [Development](doc/development.md)
