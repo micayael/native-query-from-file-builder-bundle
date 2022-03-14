@@ -455,9 +455,9 @@ SELECT * FROM clients c JOIN sales s on c.id = s.client_id WHERE (c.date >= :min
 Full Documentation and examples
 -------------------------------
 
-- [Introduction](README.md)
-- [Define your queries](doc/defining_queries.md)
-- [Use your queries](doc/using_queries.md)
-- [Examples](doc/examples.md)
-- [Extending the bundle](doc/using_queries.md) - pending
-- [Development](doc/development.md)
+- [Introduction](/micayael/native-query-from-file-builder-bundle/blob/master/README.md)
+- [Define your queries](/micayael/native-query-from-file-builder-bundle/blob/master/doc/defining_queries.md)
+- [Use your queries](/micayael/native-query-from-file-builder-bundle/blob/master/doc/using_queries.md)
+- [Examples](/micayael/native-query-from-file-builder-bundle/blob/master/doc/examples.md)
+- [Extending the bundle](/micayael/native-query-from-file-builder-bundle/blob/master/doc/using_queries.md) - pending
+- [Development](/micayael/native-query-from-file-builder-bundle/blob/master/doc/development.md)
