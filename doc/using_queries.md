@@ -88,9 +88,9 @@ array:4 [
 Full Documentation and examples
 -------------------------------
 
-- [Introduction](/micayael/native-query-from-file-builder-bundle/blob/master/README.md)
-- [Define your queries](/micayael/native-query-from-file-builder-bundle/blob/master/doc/defining_queries.md)
-- [Use your queries](/micayael/native-query-from-file-builder-bundle/blob/master/doc/using_queries.md)
-- [Examples](/micayael/native-query-from-file-builder-bundle/blob/master/doc/examples.md)
-- [Extending the bundle](/micayael/native-query-from-file-builder-bundle/blob/master/doc/using_queries.md) - pending
-- [Development](/micayael/native-query-from-file-builder-bundle/blob/master/doc/development.md)
+- [Introduction](https://github.com/micayael/native-query-from-file-builder-bundle/blob/master/README.md)
+- [Define your queries](https://github.com/micayael/native-query-from-file-builder-bundle/blob/master/doc/defining_queries.md)
+- [Use your queries](https://github.com/micayael/native-query-from-file-builder-bundle/blob/master/doc/using_queries.md)
+- [Examples](https://github.com/micayael/native-query-from-file-builder-bundle/blob/master/doc/examples.md)
+- [Extending the bundle](https://github.com/micayael/native-query-from-file-builder-bundle/blob/master/doc/using_queries.md) - pending
+- [Development](https://github.com/micayael/native-query-from-file-builder-bundle/blob/master/doc/development.md)
