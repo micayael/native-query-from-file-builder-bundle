@@ -18,7 +18,7 @@ jobs:
         symfony: [ '6.0.*' ]
 
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
 
       - name: Setup PHP ${{ matrix.php }}
         uses: shivammathur/setup-php@v2
@@ -47,7 +47,7 @@ jobs:
 
       - name: Test symfony security
         if: runner.os == 'Linux'
-        uses: symfonycorp/security-checker-action@v2
+        uses: symfonycorp/security-checker-action@v4
         with:
           disable-exit-code: 1
         id: security-check
