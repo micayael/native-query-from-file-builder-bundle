@@ -15,7 +15,7 @@ jobs:
       matrix:
         operating-system: [ ubuntu-latest, windows-latest, macos-latest ]
         php: [ '8.1' ]
-        symfony: [ '6.0.*' ]
+        symfony: [ '6.0.*', '6.1.*', '6.2.*' ]
 
     steps:
       - uses: actions/checkout@v3
@@ -26,11 +26,11 @@ jobs:
           php-version: ${{ matrix.php }}
           tools: flex
 
-      - name: Composer get cache directory
+      - name: Get Composer Cache Directory
         id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-      - name: Composer cache
-        uses: actions/cache@v3
+        run: |
+          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      - uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
