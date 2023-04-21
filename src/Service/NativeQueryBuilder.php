@@ -5,7 +5,7 @@ namespace Micayael\NativeQueryFromFileBuilderBundle\Service;
 use Doctrine\DBAL\Result;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
-use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 use Micayael\NativeQueryFromFileBuilderBundle\Helper\NativeQueryBuilderHelper;
 use Psr\Cache\CacheItemPoolInterface;
@@ -53,7 +53,7 @@ class NativeQueryBuilder implements NativeQueryBuilderInterface
         $this->entityManager = $entityManager;
     }
 
-    public function findFromSqlKey(string $key, array $params = [], ?string $orderBy = null, string $connectionName = null, ResultSetMappingBuilder $rsm = null): array
+    public function findFromSqlKey(string $key, array $params = [], ?string $orderBy = null, string $connectionName = null, ResultSetMapping $rsm = null): array
     {
         if ($orderBy) {
             $params['orderby'] = $orderBy;
@@ -80,7 +80,7 @@ class NativeQueryBuilder implements NativeQueryBuilderInterface
         return $ret;
     }
 
-    public function findOneFromSqlKey(string $key, array $params = [], string $connectionName = null, ResultSetMappingBuilder $rsm = null)
+    public function findOneFromSqlKey(string $key, array $params = [], string $connectionName = null, ResultSetMapping $rsm = null)
     {
         try {
             $sql = $this->helper->getSqlFromYamlKey($key, $params);
